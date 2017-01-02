@@ -277,7 +277,7 @@ abstract class BaseControl extends Forms\Controls\BaseControl
 		$this->template->caption	= $this->caption;
 		$this->template->_form		= $this->getForm();
 
-		// Control js settings
+		// Component js settings
 		$this->template->settings	= $this->getControlSettings();
 
 		// Template settings
