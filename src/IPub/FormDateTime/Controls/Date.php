@@ -311,14 +311,14 @@ class Date extends BaseControl
 	}
 
 	/**
-	 * @param string $key
-	 *
 	 * @return Utils\Html
 	 *
 	 * @throws Nette\InvalidArgumentException
 	 */
-	public function getControlPart($key)
+	public function getControlPart()
 	{
+		$key = reset(func_get_args());
+
 		$name = $this->getHtmlName();
 
 		if ($key === static::FIELD_NAME_DATE) {

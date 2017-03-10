@@ -40,7 +40,7 @@
 		this.$element	= $element;
 
 		this.name		= this.$element.prop('id');
-		this.options	= $.extend(IPub.Forms.DateTime.defaults, options, this.$element.data('settings') || {});
+		this.options	= $.extend({}, IPub.Forms.DateTime.defaults, options, this.$element.data('settings') || {});
 	};
 
 	IPub.Forms.DateTime.prototype =
