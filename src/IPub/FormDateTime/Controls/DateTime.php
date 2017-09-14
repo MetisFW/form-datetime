@@ -129,7 +129,8 @@ class DateTime extends Date
 	 */
 	public function getControlPart()
 	{
-		$key = reset(func_get_args());
+		$args = func_get_args();
+		$key = reset($args);
 
 		$name = $this->getHtmlName();
 
