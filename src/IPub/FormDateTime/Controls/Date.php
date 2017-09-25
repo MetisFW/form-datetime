@@ -20,7 +20,6 @@ use Nette\Utils;
 
 use IPub;
 use IPub\FormDateTime;
-use Tracy\Debugger;
 
 class Date extends BaseControl
 {
@@ -324,9 +323,9 @@ class Date extends BaseControl
 
 		if ($key === static::FIELD_NAME_DATE) {
 			if (method_exists('Nette\Forms\Helpers', 'exportRules')) {
-				$exportedRules = Forms\Helpers::exportRules($this->rules);
+				$exportedRules = Forms\Helpers::exportRules($this->getRules());
 			} else {
-				$exportedRules = self::exportRules($this->rules);
+				$exportedRules = self::exportRules($this->getRules());
 			}
 
 			$control = Utils\Html::el('input');

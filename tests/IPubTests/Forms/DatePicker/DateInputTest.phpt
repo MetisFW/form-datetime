@@ -208,4 +208,4 @@ class DateInputTest extends Tester\TestCase
 	}
 }
 
-\run(new DateInputTest());
+(new DateInputTest)->run();

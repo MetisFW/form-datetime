@@ -143,9 +143,9 @@ class Time extends BaseControl
 
 		if ($key === static::FIELD_NAME_TIME) {
 			if (method_exists('Nette\Forms\Helpers', 'exportRules')) {
-				$exportedRules = Forms\Helpers::exportRules($this->rules);
+				$exportedRules = Forms\Helpers::exportRules($this->getRules());
 			} else {
-				$exportedRules = self::exportRules($this->rules);
+				$exportedRules = self::exportRules($this->getRules());
 			}
 
 			$control = Utils\Html::el('input');

@@ -17,7 +17,6 @@ namespace IPub\FormDateTime\Utils;
 use Nette;
 use Nette\Utils;
 use Nette\Bridges;
-use Tracy\Debugger;
 
 class Html extends Utils\Html
 {
