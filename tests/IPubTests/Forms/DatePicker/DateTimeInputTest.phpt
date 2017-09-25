@@ -213,4 +213,4 @@ class DateTimeInputTest extends Tester\TestCase
 	}
 }
 
-\run(new DateTimeInputTest());
+(new DateTimeInputTest)->run();
