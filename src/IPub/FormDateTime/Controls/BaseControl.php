@@ -264,6 +264,8 @@ abstract class BaseControl extends Forms\Controls\BaseControl
 	 */
 	public function getControl()
 	{
+		$this->setOption('rendered', TRUE);
+
 		// If template file was not defined before...
 		if ($this->template->getFile() === NULL) {
 			// ...try to get base control template file
