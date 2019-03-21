@@ -369,7 +369,7 @@ class Date extends BaseControl
 				// Day of the week start. 0 (Sunday) to 6 (Saturday)
 				'weekStart'				=> $this->weekStart,
 				// Whether or not to close the date picker immediately when a date is selected
-				'autoclose'				=> $this->autoclose ? 'true' : 'false',
+				'autoclose'				=> (bool) $this->autoclose,
 				// The view that the date picker should show when it is opened
 				'startView'				=> self::START_VIEW_MONTH,
 				// The lowest view that the date picker should show

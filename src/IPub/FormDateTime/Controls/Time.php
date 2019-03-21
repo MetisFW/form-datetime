@@ -179,9 +179,9 @@ class Time extends BaseControl
 				// The time format, combination of p, P, h, hh, i, ii, s, ss, d, dd, m, mm, M, MM, yy, yyyy
 				'format'				=> $this->timeFormat,
 				// Enable or disable meridian views
-				'showMeridian'			=> $this->showMeridian ? 'true' : 'false',
+				'showMeridian'			=> (bool) $this->showMeridian,
 				// Whether or not to close the date picker immediately when a date is selected
-				'autoclose'				=> $this->autoclose ? 'true' : 'false',
+				'autoclose'				=> (bool) $this->autoclose,
 				// The lowest view that the date picker should show
 				'startView'				=> self::START_VIEW_HOUR,
 				// The lowest view that the date picker should show
