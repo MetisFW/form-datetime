@@ -38,8 +38,11 @@ class DateInputTest extends Tester\TestCase
 			[NULL, NULL],
 			[new Utils\DateTime('2015-01-10 00:00:00'), new Utils\DateTime('2015-01-10 00:00:00')],
 			[new \DateTime('2015-01-10 00:00:00'), new Utils\DateTime('2015-01-10 00:00:00')],
+			[new \DateTime('2015-01-10 10:00:00'), new Utils\DateTime('2015-01-10 00:00:00')],
 			[1421017200, new Utils\DateTime('2015-01-12 00:00:00')],
 			['2015-01-12', new Utils\DateTime('2015-01-12 00:00:00')],
+			[(new Utils\DateTime('2015-01-14 00:00:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 00:00:00 +0100')],
+			[(new Utils\DateTime('2015-01-14 10:00:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 00:00:00 +0100')],
 		];
 	}
 
@@ -64,6 +67,20 @@ class DateInputTest extends Tester\TestCase
 			[NULL, NULL],
 			['', NULL],
 			['2015-01-10', new Utils\DateTime('2015-01-10 00:00:00')],
+			[(new Utils\DateTime('2015-01-14 00:00:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 00:00:00 +0100')],
+		];
+	}
+
+	/**
+	 * @return array[]|array
+	 */
+	public function dataValidRawPostValues()
+	{
+		return [
+			[NULL, NULL],
+			['', NULL],
+			['2015-01-10', new Utils\DateTime('2015-01-10 00:00:00')],
+			[(new Utils\DateTime('2015-01-14 00:00:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 00:00:00 +0100')],
 		];
 	}
 
@@ -123,6 +140,21 @@ class DateInputTest extends Tester\TestCase
 			'date' => [
 				FormDateTime\Controls\Date::FIELD_NAME_DATE => $input,
 			]
+		]);
+
+		Assert::equal($expected, $control->getValue());
+	}
+
+	/**
+	 * @dataProvider dataValidRawPostValues
+	 *
+	 * @param string $input
+	 * @param \DateTime|NULL $expected
+	 */
+	public function testLoadHttpDataRawValid($input, $expected)
+	{
+		$control = $this->createControl([
+			'date' => $input,
 		]);
 
 		Assert::equal($expected, $control->getValue());
@@ -208,4 +240,4 @@ class DateInputTest extends Tester\TestCase
 	}
 }
 
-\run(new DateInputTest());
+(new DateInputTest)->run();

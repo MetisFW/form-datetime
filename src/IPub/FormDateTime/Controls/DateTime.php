@@ -129,15 +129,16 @@ class DateTime extends Date
 	 */
 	public function getControlPart()
 	{
-		$key = reset(func_get_args());
+		$args = func_get_args();
+		$key = reset($args);
 
 		$name = $this->getHtmlName();
 
 		if ($key === static::FIELD_NAME_TIME) {
 			if (method_exists('Nette\Forms\Helpers', 'exportRules')) {
-				$exportedRules = Forms\Helpers::exportRules($this->rules);
+				$exportedRules = Forms\Helpers::exportRules($this->getRules());
 			} else {
-				$exportedRules = self::exportRules($this->rules);
+				$exportedRules = self::exportRules($this->getRules());
 			}
 
 			$control = Utils\Html::el('input');
@@ -252,6 +253,11 @@ class DateTime extends Date
 
 			$value = Utils\DateTime::createFromFormat($this->getDateTimeFormat(TRUE), $value);
 
+			// Try default format
+			if ($value === FALSE) {
+				$value = Utils\DateTime::createFromFormat(\DateTime::ATOM, $rawValue);
+			}
+
 			// Check if value is valid string
 			if ($value === FALSE) {
 				throw new Nette\InvalidArgumentException;
@@ -303,7 +309,11 @@ class DateTime extends Date
 			// Get time value
 			$time = $this->getHttpData(Forms\Form::DATA_LINE, '[' . static::FIELD_NAME_TIME . ']');
 
-			$this->setValue(sprintf(static::MERGE_FIELDS_PATTERN, $date, $time));
+			if($date !== null || $time !== null) {
+				$this->setValue(sprintf(static::MERGE_FIELDS_PATTERN, $date, $time));
+			} else {
+				$this->setValue($this->getHttpData(Forms\Form::DATA_LINE));
+			}
 
 		} catch (Nette\InvalidArgumentException $ex) {
 			$this->value = NULL;

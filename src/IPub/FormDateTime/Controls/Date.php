@@ -20,7 +20,6 @@ use Nette\Utils;
 
 use IPub;
 use IPub\FormDateTime;
-use Tracy\Debugger;
 
 class Date extends BaseControl
 {
@@ -318,17 +317,16 @@ class Date extends BaseControl
 	public function getControlPart()
 	{
 
-		$parameters = func_get_args();
-
-		$key = reset($parameters);
+		$args = func_get_args();
+		$key = reset($args);
 
 		$name = $this->getHtmlName();
 
 		if ($key === static::FIELD_NAME_DATE) {
 			if (method_exists('Nette\Forms\Helpers', 'exportRules')) {
-				$exportedRules = Forms\Helpers::exportRules($this->rules);
+				$exportedRules = Forms\Helpers::exportRules($this->getRules());
 			} else {
-				$exportedRules = self::exportRules($this->rules);
+				$exportedRules = self::exportRules($this->getRules());
 			}
 
 			$control = Utils\Html::el('input');
@@ -461,6 +459,11 @@ class Date extends BaseControl
 			$rawValue = $value;
 			$value = Utils\DateTime::createFromFormat($this->getDateFormat(TRUE), $value);
 
+			// Try default format
+			if ($value === FALSE) {
+				$value = Utils\DateTime::createFromFormat(\DateTime::ATOM, $rawValue);
+			}
+
 			// Check if value is valid string
 			if ($value === FALSE) {
 				throw new Nette\InvalidArgumentException;
@@ -472,6 +475,10 @@ class Date extends BaseControl
 
 		if (!isset($rawValue) && isset($value)) {
 			$rawValue = $value->format($this->getDateFormat(TRUE));
+		}
+
+		if($value instanceof \DateTime) {
+			$value->setTime(0, 0, 0);
 		}
 
 		$this->value	= $value;
@@ -507,7 +514,13 @@ class Date extends BaseControl
 	public function loadHttpData()
 	{
 		try {
-			$this->setValue($this->getHttpData(Forms\Form::DATA_LINE, '[' . static::FIELD_NAME_DATE . ']'));
+			$date = $this->getHttpData(Forms\Form::DATA_LINE, '[' . static::FIELD_NAME_DATE . ']');
+
+			if($date !== null) {
+				$this->setValue($date);
+			} else {
+				$this->setValue($this->getHttpData(Forms\Form::DATA_LINE));
+			}
 
 		} catch (Nette\InvalidArgumentException $ex) {
 			$this->value = NULL;

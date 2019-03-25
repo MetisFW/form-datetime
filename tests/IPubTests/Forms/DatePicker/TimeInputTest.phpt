@@ -209,4 +209,4 @@ class TimeInputTest extends Tester\TestCase
 	}
 }
 
-\run(new TimeInputTest());
+(new TimeInputTest)->run();

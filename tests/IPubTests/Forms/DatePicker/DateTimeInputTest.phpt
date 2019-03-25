@@ -40,6 +40,7 @@ class DateTimeInputTest extends Tester\TestCase
 			[new \DateTime('2015-01-10 10:50:00'), new Utils\DateTime('2015-01-10 10:50:00')],
 			[1421017200, new Utils\DateTime('2015-01-12 00:00:00')],
 			['2015-01-12 10:50', new Utils\DateTime('2015-01-12 10:50:00')],
+			[(new Utils\DateTime('2015-01-14 10:50:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 10:50:00 +0100')],
 		];
 	}
 
@@ -66,6 +67,19 @@ class DateTimeInputTest extends Tester\TestCase
 			['', NULL, NULL],
 			['', '', NULL],
 			['2015-01-10', '12:00', new Utils\DateTime('2015-01-10 12:00:00')],
+		];
+	}
+
+	/**
+	 * @return array[]|array
+	 */
+	public function dataValidRawPostValues()
+	{
+		return [
+			[NULL, NULL],
+			['', NULL],
+			['2015-01-10 12:00', new Utils\DateTime('2015-01-10 12:00:00')],
+			[(new Utils\DateTime('2015-01-14 12:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 12:00:00 +0100')],
 		];
 	}
 
@@ -127,6 +141,21 @@ class DateTimeInputTest extends Tester\TestCase
 				FormDateTime\Controls\DateTime::FIELD_NAME_DATE => $date,
 				FormDateTime\Controls\DateTime::FIELD_NAME_TIME => $time,
 			]
+		]);
+
+		Assert::equal($expected, $control->getValue());
+	}
+
+	/**
+	 * @dataProvider dataValidRawPostValues
+	 *
+	 * @param string $input
+	 * @param \DateTime|NULL $expected
+	 */
+	public function testLoadHttpDataRawValid($input, $expected)
+	{
+		$control = $this->createControl([
+			'datetime' => $input,
 		]);
 
 		Assert::equal($expected, $control->getValue());
@@ -213,4 +242,4 @@ class DateTimeInputTest extends Tester\TestCase
 	}
 }
 
-\run(new DateTimeInputTest());
+(new DateTimeInputTest)->run();
