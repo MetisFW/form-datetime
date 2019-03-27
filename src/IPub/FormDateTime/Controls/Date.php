@@ -316,7 +316,6 @@ class Date extends BaseControl
 	 */
 	public function getControlPart()
 	{
-
 		$args = func_get_args();
 		$key = reset($args);
 
