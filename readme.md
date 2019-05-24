@@ -1,6 +1,6 @@
 # Form Date, Date&Time and Time control
 
-[![Build Status](https://img.shields.io/travis/iPublikuj/form-datetime.svg?style=flat-square)](https://travis-ci.org/iPublikuj/form-datetime)
+[![Build Status](https://img.shields.io/travis/ipublikuj-ui/form-datetime.svg?style=flat-square)](https://travis-ci.org/ipublikuj-ui/form-datetime)
 [![Latest Stable Version](https://img.shields.io/packagist/v/ipub/form-datetime.svg?style=flat-square)](https://packagist.org/packages/ipub/form-datetime)
 [![Composer Downloads](https://img.shields.io/packagist/dt/ipub/form-datetime.svg?style=flat-square)](https://packagist.org/packages/ipub/form-datetime)
 
