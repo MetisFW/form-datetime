@@ -7,7 +7,7 @@ API for Date/Time picker is accessible in global object `window.MetisFW.Forms.Da
 Serverside part of Date/Time picker form element is element with custom data attribute `data-metisfw-forms-datepicker`. This element can be initialized with method `initialize()`.
 
 ```js
-IPub.Forms.DateTime.initialize($('[data-metisfw-forms-datepicker]'));
+MetisFW.Forms.DateTime.initialize($('[data-metisfw-forms-datepicker]'));
 ```
 
 But there is shortcut implemented as jQuery plugin:
@@ -21,7 +21,7 @@ You can chain other jQuery methods after this as usual. If you try to initialize
 Finally you can initialize date/time field on the page by calling:
 
 ```js
-IPub.Forms.DateTime.load();
+MetisFW.Forms.DateTime.load();
 ```
 
 This will be automatically called when document is ready.

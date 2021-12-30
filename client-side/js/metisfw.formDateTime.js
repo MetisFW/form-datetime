@@ -264,7 +264,7 @@
 	MetisFW.Forms.DateTime.ready(MetisFW.Forms.DateTime.initialize);
 
 	// Assign plugin data to DOM
-	window.metisFw = IPub;
+	window.metisFw = MetisFW;
 
 	return MetisFW;
 
