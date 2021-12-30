@@ -30,7 +30,7 @@ jobs:
         php: ['7.0', '7.1', '7.2', '7.3', '7.4']
       fail-fast: false
 
-    name: PHP ${{ matrix.php }} tests
+    name: PHP ${{ matrix.php }} tests - lowest dependencies
     steps:
       - uses: actions/checkout@v2
       - uses: shivammathur/setup-php@v2
