@@ -20,16 +20,16 @@
 
   "require": {
     "php"        : ">=7.0",
-    "nette/application"  : "~2.3",
-    "nette/di"      : "~2.3",
-    "nette/forms"    : "~2.3",
-    "nette/utils"    : "~2.3",
-    "latte/latte"    : "~2.3"
+    "nette/application"  : "~2.4",
+    "nette/di"      : "~2.4",
+    "nette/forms"    : "~2.4",
+    "nette/utils"    : "~2.4",
+    "latte/latte"    : "~2.4"
   },
 
   "require-dev": {
-    "nette/tester"    : "2.4",
-    "tracy/tracy"    : "~2.3",
+    "nette/tester"    : "~2.0",
+    "tracy/tracy"    : "~2.4",
     "janmarek/mockista"  : "@dev"
   },
 
