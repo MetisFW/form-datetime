@@ -11,10 +11,9 @@ jobs:
     strategy:
       matrix:
         php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
-        sapi: ['php', 'php-cgi']
       fail-fast: false
 
-    name: PHP ${{ matrix.php }}/${{ matrix.sapi }} tests
+    name: PHP ${{ matrix.php }} tests
     steps:
       - uses: actions/checkout@v2
       - uses: shivammathur/setup-php@v2
@@ -22,5 +21,5 @@ jobs:
           php-version: ${{ matrix.php }}
 
       - run: composer install --no-progress --prefer-dist
-      - run: vendor/bin/tester tests -p ${{ matrix.sapi }} -s ${{ env.php-options }}
+      - run: vendor/bin/tester tests -p php -s ${{ env.php-options }}
 
