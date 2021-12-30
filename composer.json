@@ -28,7 +28,7 @@
   },
 
   "require-dev": {
-    "nette/tester"    : "@dev",
+    "nette/tester"    : "2.4",
     "tracy/tracy"    : "~2.3",
     "janmarek/mockista"  : "@dev"
   },
