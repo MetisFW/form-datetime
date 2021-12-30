@@ -1,5 +1,7 @@
 <?php
 
+/** @testCase */
+
 namespace MetisFW\FormDateTime;
 
 use Nette;

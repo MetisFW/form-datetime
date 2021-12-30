@@ -19,17 +19,17 @@
   },
 
   "require": {
-    "php"        : ">=5.4.0",
-    "nette/application"  : "~2.2",
-    "nette/di"      : "~2.2",
-    "nette/forms"    : "~2.2",
-    "nette/utils"    : "~2.2",
-    "latte/latte"    : "~2.2"
+    "php"        : ">=7.0",
+    "nette/application"  : "~2.4",
+    "nette/di"      : "~2.4",
+    "nette/forms"    : "~2.4",
+    "nette/utils"    : "~2.4",
+    "latte/latte"    : "~2.4"
   },
 
   "require-dev": {
-    "nette/tester"    : "@dev",
-    "tracy/tracy"    : "~2.2",
+    "nette/tester"    : "~2.0",
+    "tracy/tracy"    : "~2.4",
     "janmarek/mockista"  : "@dev"
   },
 

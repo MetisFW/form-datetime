@@ -1,6 +1,6 @@
 <?php
 
-namespace MetisFW\FormDateTime\FormDateTime\Controls;
+namespace MetisFW\FormDateTime\Controls;
 
 use Nette;
 use Nette\Application\UI;
