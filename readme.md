@@ -1,8 +1,10 @@
 # Form Date, Date&Time and Time control
 
-[![Build Status](https://img.shields.io/travis/ipublikuj-ui/form-datetime.svg?style=flat-square)](https://travis-ci.org/ipublikuj-ui/form-datetime)
-[![Latest Stable Version](https://img.shields.io/packagist/v/ipub/form-datetime.svg?style=flat-square)](https://packagist.org/packages/ipub/form-datetime)
-[![Composer Downloads](https://img.shields.io/packagist/dt/ipub/form-datetime.svg?style=flat-square)](https://packagist.org/packages/ipub/form-datetime)
+[![Build Status](https://img.shields.io/travis/metisfw/form-datetime.svg?style=flat-square)](https://travis-ci.org/metisfw/form-datetime)
+[![Latest Stable Version](https://img.shields.io/packagist/v/metisfw/form-datetime.svg?style=flat-square)](https://packagist.org/packages/metisfw/form-datetime)
+[![Composer Downloads](https://img.shields.io/packagist/dt/metisfw/form-datetime.svg?style=flat-square)](https://packagist.org/packages/metisfw/form-datetime)
+
+Based on abandoned library https://github.com/ipublikuj-archive/form-datetime by Adam Kadlec.
 
 Forms control for adding date, date&time and time fields for [Nette Framework](http://nette.org/) forms
 
@@ -10,12 +12,12 @@ This extension is based on two datetime libraries. For [Bootstrap](http://getboo
 
 ## Installation
 
-The best way to install ipub/form-datetime is using  [Composer](http://getcomposer.org/):
+The best way to install metisfw/form-datetime is using  [Composer](http://getcomposer.org/):
 
 ```json
 {
 	"require": {
-		"ipub/form-datetime": "dev-master"
+		"metisfw/form-datetime": "dev-master"
 	}
 }
 ```
@@ -23,27 +25,27 @@ The best way to install ipub/form-datetime is using  [Composer](http://getcompos
 or
 
 ```sh
-$ composer require ipub/form-datetime:@dev
+$ composer require metisfw/form-datetime:@dev
 ```
 
 After that you have to register extension in config.neon.
 
 ```neon
 extensions:
-	formDateTime: IPub\FormDateTime\DI\FormDateTimeExtension
+	formDateTime: MetisFW\FormDateTime\DI\FormDateTimeExtension
 ```
 
 > In Nette 2.0, registration is done in `app/bootstrap.php`:
 ```php
 $configurator->onCompile[] = function ($configurator, $compiler) {
-	$compiler->addExtension('formDateTime', new IPub\FormDateTime\DI\FormDateTimeExtension);
+	$compiler->addExtension('formDateTime', new MetisFW\FormDateTime\DI\FormDateTimeExtension);
 };
 ```
 
 And you also need to include static files into your page:
 
 ```html
-	<script src="{$basePath}/libs/ipub.formDateTime.js"></script>
+	<script src="{$basePath}/libs/metisfw.formDateTime.js"></script>
 </body>
 ```
 
@@ -125,7 +127,7 @@ If you need to define some range for selecting value, you can use filed range ru
 $form
 	->addDateTimePicker('datetime', 'Date & time picker:')
 	// Set date format
-	->addRule(\IPub\FormDateTime\Controls\DateTime::DATE_TIME_RANGE, 'Date must be between defined values', [(new Utils\DateTime(2015-01-01)), (new Utils\DateTime(2015-09-01))]);
+	->addRule(\MetisFW\FormDateTime\Controls\DateTime::DATE_TIME_RANGE, 'Date must be between defined values', [(new Utils\DateTime(2015-01-01)), (new Utils\DateTime(2015-09-01))]);
 ```
 
 This rule will also create min and max for picker window, so user will be not able to pick date out of defined range.
@@ -136,8 +138,8 @@ There are also nex two rules for minimal and maximal value:
 $form
 	->addDateTimePicker('datetime', 'Date & time picker:')
 	// Set date format
-	->addRule(\IPub\FormDateTime\Controls\DateTime::DATE_TIME_MIN, 'Date must be higher than selected', (new Utils\DateTime(2015-01-01)));
-	->addRule(\IPub\FormDateTime\Controls\DateTime::DATE_TIME_MAX, 'Date must be lower than selected', (new Utils\DateTime(2015-09-01)));
+	->addRule(\MetisFW\FormDateTime\Controls\DateTime::DATE_TIME_MIN, 'Date must be higher than selected', (new Utils\DateTime(2015-01-01)));
+	->addRule(\MetisFW\FormDateTime\Controls\DateTime::DATE_TIME_MAX, 'Date must be lower than selected', (new Utils\DateTime(2015-09-01)));
 ```
 
 ### Custom templates and rendering

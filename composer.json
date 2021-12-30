@@ -1,42 +1,41 @@
 {
-	"name"			: "ipub/form-datetime",
-	"type"			: "library",
-	"description"	: "Forms control for adding date, date&time and time fields for Nette Framework",
-	"keywords"		: ["nette", "form", "date", "datepicker", "time", "timepicker", "ipub", "framework", "tools"],
-	"homepage"		: "https://github.com/iPublikuj/form-datetime",
-	"license"		: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+  "name"      : "metisfw/form-datetime",
+  "type"      : "library",
+  "description"  : "Forms control for adding date, date&time and time fields for Nette Framework",
+  "keywords"    : ["nette", "form", "date", "datepicker", "time", "timepicker"],
+  "homepage"    : "https://github.com/MEtisFw/form-datetime",
+  "license"    : ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 
-	"authors": [
-		{
-			"name"		: "iPublikuj:cms",
-			"email"		: "info@ipublikuj.eu",
-			"homepage"	: "http://www.ipublikuj.eu/"
-		}
-	],
+  "authors": [
+    {
+      "name": "GrowJOB s.r.o",
+      "email": "dev@growjob.com"
+      }
+    ],
 
-	"support":{
-		"email"		:"support@ipublikuj.eu",
-		"issues"	:"https://github.com/iPublikuj/form-datetime/issues"
-	},
+  "support":{
+    "email": "dev@growjob.com",
+    "issues": "https://github.com/MetisFW/form-datetime/issues"
+  },
 
-	"require": {
-		"php"				: ">=5.4.0",
-		"nette/application"	: "~2.2",
-		"nette/di"			: "~2.2",
-		"nette/forms"		: "~2.2",
-		"nette/utils"		: "~2.2",
-		"latte/latte"		: "~2.2"
-	},
+  "require": {
+    "php"        : ">=5.4.0",
+    "nette/application"  : "~2.2",
+    "nette/di"      : "~2.2",
+    "nette/forms"    : "~2.2",
+    "nette/utils"    : "~2.2",
+    "latte/latte"    : "~2.2"
+  },
 
-	"require-dev": {
-		"nette/tester"		: "@dev",
-		"tracy/tracy"		: "~2.2",
-		"janmarek/mockista"	: "@dev"
-	},
+  "require-dev": {
+    "nette/tester"    : "@dev",
+    "tracy/tracy"    : "~2.2",
+    "janmarek/mockista"  : "@dev"
+  },
 
-	"autoload": {
-		"psr-0": {
-			"IPub\\FormDateTime\\": "src/"
-		}
-	}
+  "autoload": {
+    "psr-0": {
+      "MetisFW\\FormDateTime\\": "src/"
+    }
+  }
 }

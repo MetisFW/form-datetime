@@ -1,0 +1,24 @@
+<div class="metisfw-datepicker" data-metisfw-forms-datepicker data-metisfw-forms-datepicker-type="default" data-settings="{json_encode($settings)}">
+	{if isset($dateInput)}
+		<div n:if="$showButtons && $buttonsPosition == 'before' && ($showTriggerButton || $showCancelButton)" class="metisfw-button-group">
+			<a n:if="$showTriggerButton" href="#" class="metisfw-button metisfw-button-select" data-action="datepicker.show"><i class="metisfw-icon-calendar"></i></a>
+			<a n:if="$showCancelButton" href="#" class="metisfw-button metisfw-button-cancel" data-action="datepicker.clear"><i class="metisfw-icon-remove"></i></a>
+		</div>
+		{$dateInput}
+		<div n:if="$showButtons && $buttonsPosition == 'after' && ($showTriggerButton || $showCancelButton)" class="metisfw-button-group">
+			<a n:if="$showTriggerButton" href="#" class="metisfw-button metisfw-button-select" data-action="datepicker.show"><i class="metisfw-icon-calendar"></i></a>
+			<a n:if="$showCancelButton" href="#" class="metisfw-button metisfw-button-cancel" data-action="datepicker.clear"><i class="metisfw-icon-remove"></i></a>
+		</div>
+	{/if}
+	{if isset($timeInput)}
+		<div n:if="$showButtons && $buttonsPosition == 'before' && ($showTriggerButton || $showCancelButton)" class="metisfw-button-group">
+			<a n:if="$showTriggerButton" href="#" class="metisfw-button metisfw-button-select" data-action="timepicker.show"><i class="metisfw-icon-time"></i></a>
+			<a n:if="$showCancelButton" href="#" class="metisfw-button metisfw-button-cancel" data-action="timepicker.clear"><i class="metisfw-icon-remove"></i></a>
+		</div>
+		{$timeInput}
+		<div n:if="$showButtons && $buttonsPosition == 'after' && ($showTriggerButton || $showCancelButton)" class="metisfw-button-group">
+			<a n:if="$showTriggerButton" href="#" class="metisfw-button metisfw-button-select" data-action="timepicker.show"><i class="metisfw-icon-time"></i></a>
+			<a n:if="$showCancelButton" href="#" class="metisfw-button metisfw-button-cancel" data-action="timepicker.clear"><i class="metisfw-icon-remove"></i></a>
+		</div>
+	{/if}
+</div>

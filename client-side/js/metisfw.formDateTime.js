@@ -1,19 +1,5 @@
 /**
- * @package		iPublikuj:Framework!
- * @copyright	Copyright (C) 2015. All rights reserved.
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec (http://www.ipublikuj.eu)
- *
- * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
- */
-
-/**
- * Client-side script for iPublikuj:FormDateTime!
- *
- * @author		Adam Kadlec (http://www.ipublikuj.eu)
- * @package		iPublikuj:Framework!
- * @version		1.0
+ * Client-side script for MetisFW:FormDateTime!
  *
  * @param {jQuery} $ (version > 1.7)
  * @param {Window} window
@@ -25,9 +11,9 @@
 	/* jshint laxbreak: true, expr: true */
 	"use strict";
 
-	var IPub = window.IPub || {};
+	var MetisFW = window.MetisFW || {};
 
-	IPub.Forms = IPub.Forms || {};
+	MetisFW.Forms = MetisFW.Forms || {};
 
 	/**
 	 * Forms date picker extension definition
@@ -35,15 +21,15 @@
 	 * @param {jQuery} $element
 	 * @param {Object} options
 	 */
-	IPub.Forms.DateTime = function ($element, options)
+	MetisFW.Forms.DateTime = function ($element, options)
 	{
 		this.$element	= $element;
 
 		this.name		= this.$element.prop('id');
-		this.options	= $.extend({}, IPub.Forms.DateTime.defaults, options, this.$element.data('settings') || {});
+		this.options	= $.extend({}, MetisFW.Forms.DateTime.defaults, options, this.$element.data('settings') || {});
 	};
 
-	IPub.Forms.DateTime.prototype =
+	MetisFW.Forms.DateTime.prototype =
 	{
 		// Initial function.
 		init: function () {
@@ -59,13 +45,13 @@
 				$timeClear		: this.$element.find('[data-action="timepicker.clear"]')
 			};
 
-			if (this.$element.data('ipubFormsDatepickerType') == 'uikit') {
+			if (this.$element.data('metisFwFormsDatepickerType') == 'uikit') {
 				this.type = 'uikit';
 
 				// Init uikit datepicker
 				this.uikitPicker();
 
-			} else if (this.$element.data('ipubFormsDatepickerType') == 'bootstrap') {
+			} else if (this.$element.data('metisFwFormsDatepickerType') == 'bootstrap') {
 				this.type = 'bootstrap';
 
 				// Init bootstrap datepicker
@@ -126,17 +112,17 @@
 				// Listen to uikit events
 				this.$dateField.on('update.uk.datepicker', function() {
 					// Fire change event
-					that.$element.trigger('update.date.ipub.forms.datepicker', that.$element.val());
+					that.$element.trigger('update.date.MetisFW.forms.datepicker', that.$element.val());
 				});
 
 				this.$dateField.on('show.uk.datepicker', function() {
 					// Fire change event
-					that.$element.trigger('show.date.ipub.forms.datepicker');
+					that.$element.trigger('show.date.MetisFW.forms.datepicker');
 				});
 
 				this.$dateField.on('hide.uk.datepicker', function() {
 					// Fire change event
-					that.$element.trigger('hide.date.ipub.forms.datepicker');
+					that.$element.trigger('hide.date.MetisFW.forms.datepicker');
 				});
 			}
 
@@ -164,17 +150,17 @@
 				// Listen to bootstrap events
 				this.$dateField.on('changeDate', function() {
 					// Fire change event
-					that.$element.trigger('update.date.ipub.forms.datepicker', that.$dateField.val());
+					that.$element.trigger('update.date.MetisFW.forms.datepicker', that.$dateField.val());
 				});
 
 				this.$dateField.on('show', function() {
 					// Fire change event
-					that.$element.trigger('show.date.ipub.forms.datepicker');
+					that.$element.trigger('show.date.MetisFW.forms.datepicker');
 				});
 
 				this.$dateField.on('hide', function() {
 					// Fire change event
-					that.$element.trigger('hide.date.ipub.forms.datepicker');
+					that.$element.trigger('hide.date.MetisFW.forms.datepicker');
 				});
 			}
 
@@ -186,17 +172,17 @@
 				// Listen to bootstrap events
 				this.$timeField.on('changeDate', function() {
 					// Fire change event
-					that.$element.trigger('update.time.ipub.forms.datepicker', that.$dateField.val());
+					that.$element.trigger('update.time.MetisFW.forms.datepicker', that.$dateField.val());
 				});
 
 				this.$timeField.on('show', function() {
 					// Fire change event
-					that.$element.trigger('show.time.ipub.forms.datepicker');
+					that.$element.trigger('show.time.MetisFW.forms.datepicker');
 				});
 
 				this.$timeField.on('hide', function() {
 					// Fire change event
-					that.$element.trigger('hide.time.ipub.forms.datepicker');
+					that.$element.trigger('hide.time.MetisFW.forms.datepicker');
 				});
 			}
 		}
@@ -208,7 +194,7 @@
 	 * @param {jQuery} $elements
 	 * @param {Object} options
 	 */
-	IPub.Forms.DateTime.initialize = function ($elements, options)
+	MetisFW.Forms.DateTime.initialize = function ($elements, options)
 	{
 		var nodes = new Array();
 
@@ -216,12 +202,12 @@
 			nodes = ($elements instanceof jQuery) ? $elements.get() : $elements;
 
 		} else {
-			nodes = Array.prototype.slice.call(document.querySelectorAll('[data-ipub-forms-datepicker]'), 0);
+			nodes = Array.prototype.slice.call(document.querySelectorAll('[data-metisfw-forms-datepicker]'), 0);
 		}
 
 		nodes.forEach(function(item, i){
-			if (!item.getAttribute('ipub-forms-datepicker')) {
-				item.setAttribute('ipub-forms-datepicker', (new IPub.Forms.DateTime($(item), options).init()));
+			if (!item.getAttribute('metisfw-forms-datepicker')) {
+				item.setAttribute('metisfw-forms-datepicker', (new MetisFW.Forms.DateTime($(item), options).init()));
 			}
 		});
 	};
@@ -231,7 +217,7 @@
 	 *
 	 * @param fn
 	 */
-	IPub.Forms.DateTime.ready = function(fn)
+	MetisFW.Forms.DateTime.ready = function(fn)
 	{
 		if (document.readyState != 'loading'){
 			fn();
@@ -242,32 +228,32 @@
 	};
 
 	/**
-	 * IPub Forms date picker plugin definition
+	 * MetisFw Forms date picker plugin definition
 	 */
 
-	var old = $.fn.ipubFormsDateTime;
+	var old = $.fn.metisFwFormsDateTime;
 
-	$.fn.ipubFormsDateTime = function (options) {
-		IPub.Forms.DateTime.initialize(this, options);
+	$.fn.metisFwFormsDateTime = function (options) {
+		MetisFW.Forms.DateTime.initialize(this, options);
 
 		return this;
 	};
 
 	/**
-	 * IPub Forms date picker plugin no conflict
+	 * MEtisFW Forms date picker plugin no conflict
 	 */
 
-	$.fn.ipubFormsDateTime.noConflict = function () {
-		$.fn.ipubFormsDateTime = old;
+	$.fn.metisFwFormsDateTime.noConflict = function () {
+		$.fn.metisFwFormsDateTime = old;
 
 		return this;
 	};
 
 	/**
-	 * IPub Forms date picker plugin default settings
+	 * MEtisFW Forms date picker plugin default settings
 	 */
 
-	IPub.Forms.DateTime.defaults = {
+	MetisFW.Forms.DateTime.defaults = {
 
 	};
 
@@ -275,11 +261,11 @@
 	 * Complete plugin
 	 */
 
-	IPub.Forms.DateTime.ready(IPub.Forms.DateTime.initialize);
+	MetisFW.Forms.DateTime.ready(MetisFW.Forms.DateTime.initialize);
 
 	// Assign plugin data to DOM
-	window.IPub = IPub;
+	window.metisFw = IPub;
 
-	return IPub;
+	return MetisFW;
 
 })(jQuery, window, document, location, navigator);

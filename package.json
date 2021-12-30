@@ -1,0 +1,10 @@
+{
+  "name": "@metisfw/form-datetime",
+  "version": "1.0",
+  "files": [
+    "client-side/js/*"
+  ],
+  "dependencies": {
+    "smalot-bootstrap-datetimepicker": "https://github.com/smalot/bootstrap-datetimepicker.git#2.3.17"
+  }
+}

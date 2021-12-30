@@ -1,19 +1,6 @@
 <?php
-/**
-* Test: IPub\Forms\DateInput
-* @testCase
-*
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:FormDateTime!
- * @subpackage	Tests
- * @since		5.0
- *
- * @date		12.01.15
- */
 
-namespace IPubTests\Forms\DateTime;
+namespace MetisFW\FormDateTime;
 
 use Nette;
 use Nette\Forms;
@@ -22,12 +9,11 @@ use Nette\Utils;
 use Tester;
 use Tester\Assert;
 
-use IPub;
-use IPub\FormDateTime;
+use MetisFW\FormDateTime;
 
 require __DIR__ . '/../../bootstrap.php';
 
-class DateInputTest extends Tester\TestCase
+class DateTimeInputTest extends Tester\TestCase
 {
 	/**
 	 * @return array[]|array
@@ -36,13 +22,11 @@ class DateInputTest extends Tester\TestCase
 	{
 		return [
 			[NULL, NULL],
-			[new Utils\DateTime('2015-01-10 00:00:00'), new Utils\DateTime('2015-01-10 00:00:00')],
-			[new \DateTime('2015-01-10 00:00:00'), new Utils\DateTime('2015-01-10 00:00:00')],
-			[new \DateTime('2015-01-10 10:00:00'), new Utils\DateTime('2015-01-10 00:00:00')],
+			[new Utils\DateTime('2015-01-10 10:50:00'), new Utils\DateTime('2015-01-10 10:50:00')],
+			[new \DateTime('2015-01-10 10:50:00'), new Utils\DateTime('2015-01-10 10:50:00')],
 			[1421017200, new Utils\DateTime('2015-01-12 00:00:00')],
-			['2015-01-12', new Utils\DateTime('2015-01-12 00:00:00')],
-			[(new Utils\DateTime('2015-01-14 00:00:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 00:00:00 +0100')],
-			[(new Utils\DateTime('2015-01-14 10:00:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 00:00:00 +0100')],
+			['2015-01-12 10:50', new Utils\DateTime('2015-01-12 10:50:00')],
+			[(new Utils\DateTime('2015-01-14 10:50:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 10:50:00 +0100')],
 		];
 	}
 
@@ -64,10 +48,11 @@ class DateInputTest extends Tester\TestCase
 	public function dataValidPostValues()
 	{
 		return [
-			[NULL, NULL],
-			['', NULL],
-			['2015-01-10', new Utils\DateTime('2015-01-10 00:00:00')],
-			[(new Utils\DateTime('2015-01-14 00:00:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 00:00:00 +0100')],
+			[NULL, NULL, NULL],
+			[NULL, '', NULL],
+			['', NULL, NULL],
+			['', '', NULL],
+			['2015-01-10', '12:00', new Utils\DateTime('2015-01-10 12:00:00')],
 		];
 	}
 
@@ -79,17 +64,17 @@ class DateInputTest extends Tester\TestCase
 		return [
 			[NULL, NULL],
 			['', NULL],
-			['2015-01-10', new Utils\DateTime('2015-01-10 00:00:00')],
-			[(new Utils\DateTime('2015-01-14 00:00:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 00:00:00 +0100')],
+			['2015-01-10 12:00', new Utils\DateTime('2015-01-10 12:00:00')],
+			[(new Utils\DateTime('2015-01-14 12:00 +0100'))->format(\DateTime::ATOM), new Utils\DateTime('2015-01-14 12:00:00 +0100')],
 		];
 	}
 
 	public function dataTemplates()
 	{
 		return [
-			['bootstrap.latte', "div[data-ipub-forms-datepicker-type='bootstrap']"],
-			['uikit.latte', "div[data-ipub-forms-datepicker-type='uikit']"],
-			['default.latte', "div[data-ipub-forms-datepicker-type='default']"],
+			['bootstrap.latte', "div[data-metisfw-forms-datepicker-type='bootstrap']"],
+			['uikit.latte', "div[data-metisfw-forms-datepicker-type='uikit']"],
+			['default.latte', "div[data-metisfw-forms-datepicker-type='default']"],
 		];
 	}
 
@@ -101,7 +86,7 @@ class DateInputTest extends Tester\TestCase
 	 */
 	public function testValidInputs($input, $expected)
 	{
-		$control = new FormDateTime\Controls\Date;
+		$control = new FormDateTime\Controls\DateTime;
 		$control->setValue($input);
 
 		Assert::equal($expected, $control->getValue());
@@ -116,7 +101,7 @@ class DateInputTest extends Tester\TestCase
 	 */
 	public function testInvalidInputs($input)
 	{
-		$control = new FormDateTime\Controls\Date;
+		$control = new FormDateTime\Controls\DateTime;
 		$control->setValue($input);
 	}
 
@@ -131,14 +116,16 @@ class DateInputTest extends Tester\TestCase
 	/**
 	 * @dataProvider dataValidPostValues
 	 *
-	 * @param string $input
+	 * @param string $date
+	 * @param string $time
 	 * @param \DateTime|NULL $expected
 	 */
-	public function testLoadHttpDataValid($input, $expected)
+	public function testLoadHttpDataValid($date, $time, $expected)
 	{
 		$control = $this->createControl([
-			'date' => [
-				FormDateTime\Controls\Date::FIELD_NAME_DATE => $input,
+			'datetime' => [
+				FormDateTime\Controls\DateTime::FIELD_NAME_DATE => $date,
+				FormDateTime\Controls\DateTime::FIELD_NAME_TIME => $time,
 			]
 		]);
 
@@ -154,7 +141,7 @@ class DateInputTest extends Tester\TestCase
 	public function testLoadHttpDataRawValid($input, $expected)
 	{
 		$control = $this->createControl([
-			'date' => $input,
+			'datetime' => $input,
 		]);
 
 		Assert::equal($expected, $control->getValue());
@@ -165,13 +152,14 @@ class DateInputTest extends Tester\TestCase
 		// Create form control
 		$control = $this->createControl();
 		// Set form control value
-		$control->setValue(new Utils\DateTime('2015-01-10 00:00:00'));
+		$control->setValue(new Utils\DateTime('2015-01-10 10:50:00'));
 		// Set one of default templates
 		$control->setTemplateFile('bootstrap.latte');
 
 		$dq = Tester\DomQuery::fromHtml((string) $control->getControl());
 
 		Assert::true($dq->has("input[value='2015-01-10']"));
+		Assert::true($dq->has("input[value='10:50']"));
 	}
 
 	/**
@@ -185,7 +173,7 @@ class DateInputTest extends Tester\TestCase
 		// Create form control
 		$control = $this->createControl();
 		// Set form control value
-		$control->setValue(new Utils\DateTime('2015-01-10 00:00:00'));
+		$control->setValue(new Utils\DateTime('2015-01-10 10:50:00'));
 		// Set one of default templates
 		$control->setTemplateFile($template);
 
@@ -199,29 +187,29 @@ class DateInputTest extends Tester\TestCase
 	 */
 	public function testMultipleRegistration()
 	{
-		FormDateTime\Controls\Date::register();
-		FormDateTime\Controls\Date::register();
+		FormDateTime\Controls\DateTime::register();
+		FormDateTime\Controls\DateTime::register();
 	}
 
 	public function testRegistration()
 	{
-		FormDateTime\Controls\Date::register();
+		FormDateTime\Controls\DateTime::register();
 
 		// Create form
 		$form = new Forms\Form;
 		// Create form control
-		$control = $form->addDatePicker('date', 'Date picker');
+		$control = $form->addDateTimePicker('datetime', 'Date & time picker');
 
-		Assert::type('IPub\FormDateTime\Controls\Date', $control);
-		Assert::equal('date', $control->getName());
-		Assert::equal('Date picker', $control->caption);
+		Assert::type('MetisFW\FormDateTime\Controls\DateTime', $control);
+		Assert::equal('datetime', $control->getName());
+		Assert::equal('Date & time picker', $control->caption);
 		Assert::same($form, $control->getForm());
 	}
 
 	/**
 	 * @param array $data
 	 *
-	 * @return FormDateTime\Controls\Date
+	 * @return FormDateTime\Controls\DateTime
 	 */
 	private function createControl($data = [])
 	{
@@ -232,12 +220,12 @@ class DateInputTest extends Tester\TestCase
 		// Create form
 		$form = new Forms\Form;
 		// Create form control
-		$control = new FormDateTime\Controls\Date();
+		$control = new FormDateTime\Controls\DateTime();
 		// Add form control to form
-		$form->addComponent($control, 'date');
+		$form->addComponent($control, 'datetime');
 
 		return $control;
 	}
 }
 
-(new DateInputTest)->run();
+(new DateTimeInputTest)->run();

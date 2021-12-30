@@ -1,7 +1,9 @@
 Licenses
 ========
 
-Good news everyone! You may use iPublikuj Framework under the terms of either
+Based on abandoned library https://github.com/ipublikuj-archive/form-datetime by Adam Kadlec.
+
+Good news everyone! You may use this library under the terms of either
 the New BSD License or the GNU General Public License (GPL) version 2 or 3.
 
 The BSD License is recommended for most projects. It is easy to understand and it
@@ -9,13 +11,13 @@ places almost no restrictions on what you can do with the framework. If the GPL
 fits better to your project, you can use the framework under this license.
 
 You don't have to notify anyone which license you are using. You can freely
-use iPublikuj Framework in commercial projects as long as the copyright header
+use this library in commercial projects as long as the copyright header
 remains intact.
 
 New BSD License
 ---------------
 
-Copyright (c) 2014 Adam Kadlec
+Copyright (c) 2021 GrowJOB s.r.o.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,

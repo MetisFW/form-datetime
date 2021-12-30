@@ -1,18 +1,6 @@
 <?php
-/**
- * BaseControl.php
- *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:FormDateTime!
- * @subpackage	Controls
- * @since		5.0
- *
- * @date		11.01.15
- */
 
-namespace IPub\FormDateTime\Controls;
+namespace MetisFW\FormDateTime\FormDateTime\Controls;
 
 use Nette;
 use Nette\Application\UI;
@@ -23,17 +11,16 @@ use Nette\Utils;
 
 use Latte;
 
-use IPub;
-use IPub\FormDateTime;
+use MetisFW\FormDateTime;
 
 abstract class BaseControl extends Forms\Controls\BaseControl
 {
 	/**
 	 * Validator constants
 	 */
-	const DATE_TIME_RANGE	= 'IPub\FormDateTime\Controls\BaseControl::validateDateTimeRange';
-	const DATE_TIME_MIN		= 'IPub\FormDateTime\Controls\BaseControl::validateDateTimeMin';
-	const DATE_TIME_MAX		= 'IPub\FormDateTime\Controls\BaseControl::validateDateTimeMax';
+	const DATE_TIME_RANGE	= 'MetisFW\FormDateTime\Controls\BaseControl::validateDateTimeRange';
+	const DATE_TIME_MIN		= 'MetisFW\FormDateTime\Controls\BaseControl::validateDateTimeMin';
+	const DATE_TIME_MAX		= 'MetisFW\FormDateTime\Controls\BaseControl::validateDateTimeMax';
 
 	/**
 	 * Icon left

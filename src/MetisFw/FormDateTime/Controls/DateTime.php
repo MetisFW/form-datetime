@@ -1,27 +1,14 @@
 <?php
-/**
- * Time.php
- *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:FormDateTime!
- * @subpackage	Controls
- * @since		5.0
- *
- * @date		01.07.13
- */
 
-namespace IPub\FormDateTime\Controls;
+namespace MetisFW\FormDateTime\FormDateTime\Controls;
 
 use Nette;
 use Nette\Forms;
 use Nette\Utils;
 
-use IPub;
-use IPub\FormDateTime;
+use MetisFW\FormDateTime;
 
-class Time extends BaseControl
+class DateTime extends Date
 {
 	/**
 	 * Default date format
@@ -39,13 +26,8 @@ class Time extends BaseControl
 	const FIELD_NAME_TIME	= 'time';
 
 	/**
-	 * Calendar view mode with hour overview
-	 */
-	const START_VIEW_HOUR = 0;
-
-	/**
 	 * Date format - d, m, M, y
-	 *
+	 * 
 	 * @var string date format
 	 */
 	protected $timeFormat = self::W3C_TIME_FORMAT;
@@ -59,7 +41,7 @@ class Time extends BaseControl
 
 	/**
 	 * The lowest view that the datetime picker should show
-	 *
+	 * 
 	 * @var number
 	 */
 	protected $minView = self::START_VIEW_HOUR;
@@ -70,18 +52,16 @@ class Time extends BaseControl
 	private static $registered = FALSE;
 
 	/**
+	 * @param string $dateFormat
 	 * @param string $timeFormat
 	 * @param string $language
 	 * @param string $label
 	 */
-	public function __construct($timeFormat = self::W3C_TIME_FORMAT, $language = self::DEFAULT_LANGUAGE, $label = NULL)
+	public function __construct($dateFormat = self::W3C_DATE_FORMAT, $timeFormat = self::W3C_TIME_FORMAT, $language = self::DEFAULT_LANGUAGE, $label = NULL)
 	{
-		parent::__construct($label);
+		parent::__construct($dateFormat, $language, $label);
 
-		$this->control->type = 'text';
-
-		$this->timeFormat	= $timeFormat;
-		$this->language		= $language;
+		$this->timeFormat = $timeFormat;
 	}
 
 	/**
@@ -163,9 +143,10 @@ class Time extends BaseControl
 			}
 
 			return $control;
-		}
 
-		throw new Nette\InvalidArgumentException('Part ' . $key . ' does not exist');
+		} else {
+			return parent::getControlPart($key);
+		}
 	}
 
 	/**
@@ -173,45 +154,44 @@ class Time extends BaseControl
 	 */
 	protected function getControlSettings()
 	{
-		// Set data-attribute options
-		$settings = [
-			'time' => [
-				// The time format, combination of p, P, h, hh, i, ii, s, ss, d, dd, m, mm, M, MM, yy, yyyy
-				'format'				=> $this->timeFormat,
-				// Enable or disable meridian views
-				'showMeridian'			=> (bool) $this->showMeridian,
-				// Whether or not to close the date picker immediately when a date is selected
-				'autoclose'				=> (bool) $this->autoclose,
-				// The lowest view that the date picker should show
-				'startView'				=> self::START_VIEW_HOUR,
-				// The lowest view that the date picker should show
-				'minView'				=> self::START_VIEW_HOUR,
-				// The highest view that the date picker should show
-				'maxView'				=> self::START_VIEW_HOUR,
-				//
-				'viewSelect'			=> self::START_VIEW_HOUR,
-				// Enable keyboard for navigation
-				'keyboardNavigation'	=> $this->keyboardNavigation,
-				// The two-letter code of the language to use for month and day names
-				'language'				=> $this->language,
-				// Whether or not to force parsing of the input value when the picker is closed
-				'forceParse'			=> $this->forceParse,
-			]
+		$settings = parent::getControlSettings();
+
+		$settings['time'] = [
+			// The time format, combination of p, P, h, hh, i, ii, s, ss, d, dd, m, mm, M, MM, yy, yyyy
+			'format'				=> $this->timeFormat,
+			// Enable or disable meridian views
+			'showMeridian'			=> (bool) $this->showMeridian,
+			// Whether or not to close the date picker immediately when a date is selected
+			'autoclose'				=> (bool) $this->autoclose,
+			// The lowest view that the date picker should show
+			'startView'				=> self::START_VIEW_DAY,
+			// The lowest view that the date picker should show
+			'minView'				=> self::START_VIEW_HOUR,
+			// The highest view that the date picker should show
+			'maxView'				=> self::START_VIEW_DAY,
+			//
+			'viewSelect'			=> self::START_VIEW_HOUR,
+			// Enable keyboard for navigation
+			'keyboardNavigation'	=> $this->keyboardNavigation,
+			// The two-letter code of the language to use for month and day names
+			'language'				=> $this->language,
+			// Whether or not to force parsing of the input value when the picker is closed
+			'forceParse'			=> $this->forceParse,
 		];
 
 		// The earliest date that may be selected
 		if ($this->startDateTime !== NULL) {
-			$settings['time']['startDate'] = $this->startDateTime->format($this->getTimeFormat(TRUE));
+			$settings['time']['startDate'] = $this->startDateTime->format($this->getDateTimeFormat(TRUE));
 		}
 
 		// The latest date that may be selected
 		if ($this->endDateTime !== NULL) {
-			$settings['time']['endDate'] = $this->endDateTime->format($this->getTimeFormat(TRUE));
+			$settings['time']['endDate'] = $this->endDateTime->format($this->getDateTimeFormat(TRUE));
 		}
 
 		// Default date
 		if ($this->value) {
-			$settings['date']['initialDate'] = $this->value->format($this->getTimeFormat(TRUE));
+			$settings['date']['initialDate'] = $this->value->format($this->getDateTimeFormat(TRUE));
 		}
 
 		return $settings;
@@ -232,14 +212,14 @@ class Time extends BaseControl
 		if ($value instanceof Utils\DateTime) {
 			$rawValue = $value;
 
-		// \DateTime object
+			// \DateTime object
 		} else if($value instanceof \DateTime) {
 			$rawValue = $value;
 
 			// Convert \DateTime to \Nette\Utils\DateTime
-			$value = Utils\DateTime::createFromFormat($this->getTimeFormat(TRUE), $value->format($this->toPhpFormat($this->timeFormat)));
+			$value = Utils\DateTime::createFromFormat($this->getDateTimeFormat(TRUE), $value->format($this->getDateTimeFormat(TRUE)));
 
-			// Timestamp
+		// Timestamp
 		} else if (is_int($value)) {
 			$rawValue = $value;
 			$value = (new Utils\DateTime())->setTimestamp($value);
@@ -258,7 +238,12 @@ class Time extends BaseControl
 		} else if (is_string($value)) {
 			$rawValue = $value;
 
-			$value = Utils\DateTime::createFromFormat($this->getTimeFormat(TRUE), $value);
+			$value = Utils\DateTime::createFromFormat($this->getDateTimeFormat(TRUE), $value);
+
+			// Try default format
+			if ($value === FALSE) {
+				$value = Utils\DateTime::createFromFormat(\DateTime::ATOM, $rawValue);
+			}
 
 			// Check if value is valid string
 			if ($value === FALSE) {
@@ -270,7 +255,7 @@ class Time extends BaseControl
 		}
 
 		if (!isset($rawValue) && isset($value)) {
-			$rawValue = $value->format($this->getTimeFormat(TRUE));
+			$rawValue = $value->format($this->getDateTimeFormat(TRUE));
 		}
 
 		$this->value	= $value;
@@ -293,7 +278,7 @@ class Time extends BaseControl
 			return NULL;
 
 		} else {
-			$value = Utils\DateTime::createFromFormat($this->getTimeFormat(TRUE), $value);
+			$value = Utils\DateTime::createFromFormat($this->getDateTimeFormat(TRUE), $value);
 
 			if ($value === FALSE) {
 				return NULL;
@@ -306,7 +291,16 @@ class Time extends BaseControl
 	public function loadHttpData()
 	{
 		try {
-			$this->setValue($this->getHttpData(Forms\Form::DATA_LINE, '[' . static::FIELD_NAME_TIME . ']'));
+			// Get date value
+			$date = $this->getHttpData(Forms\Form::DATA_LINE, '[' . static::FIELD_NAME_DATE . ']');
+			// Get time value
+			$time = $this->getHttpData(Forms\Form::DATA_LINE, '[' . static::FIELD_NAME_TIME . ']');
+
+			if($date !== null || $time !== null) {
+				$this->setValue(sprintf(static::MERGE_FIELDS_PATTERN, $date, $time));
+			} else {
+				$this->setValue($this->getHttpData(Forms\Form::DATA_LINE));
+			}
 
 		} catch (Nette\InvalidArgumentException $ex) {
 			$this->value = NULL;
@@ -318,9 +312,9 @@ class Time extends BaseControl
 	 *
 	 * @return string
 	 */
-	protected function getTimeFormat($php = FALSE)
+	protected function getDateTimeFormat($php = FALSE)
 	{
-		$format = (strpos($this->timeFormat, '!') === FALSE ? '!' : '') . $this->timeFormat;
+		$format = sprintf(static::MERGE_FIELDS_PATTERN, $this->dateFormat, $this->timeFormat);
 
 		if ($php) {
 			$format = $this->toPhpFormat($format);
@@ -339,8 +333,8 @@ class Time extends BaseControl
 	protected function toPhpFormat($str)
 	{
 		$f = $this->strReplace(
-			array('p',	'P',	'hh',	'ii',	'ss'),
-			array('a',	'A',	'H',	'i',	's'),
+			array('p',	'P',	'hh',	'ii',	'ss',	'dd',	'd',	'mm',	'm',	'MM',	'M',	'yyyy',	'yyy',	'yy'),
+			array('a',	'A',	'H',	'i',	's',	'd',	'j',	'm',	'n',	'F',	'M',	'Y',	'y',	'y'),
 			$str
 		);
 
@@ -349,22 +343,23 @@ class Time extends BaseControl
 
 	/**
 	 * @param string $timeFormat
+	 * @param string $dateFormat
 	 * @param string $language
 	 * @param string $method
 	 */
-	public static function register($timeFormat = self::W3C_TIME_FORMAT, $language = self::DEFAULT_LANGUAGE, $method = 'addTimePicker')
+	public static function register($timeFormat = self::W3C_TIME_FORMAT, $dateFormat = self::W3C_DATE_FORMAT, $language = self::DEFAULT_LANGUAGE, $method = 'addDateTimePicker')
 	{
 		// Check for multiple registration
 		if (static::$registered) {
-			throw new Nette\InvalidStateException('Time picker control already registered.');
+			throw new Nette\InvalidStateException('Date & time picker control already registered.');
 		}
 
 		static::$registered = TRUE;
 
 		$class = function_exists('get_called_class')?get_called_class():__CLASS__;
 		Forms\Container::extensionMethod(
-			$method, function (Forms\Container $form, $name, $label = NULL) use ($class, $timeFormat, $language) {
-				$component = new $class($timeFormat, $language,  $label);
+			$method, function (Forms\Container $form, $name, $label = NULL) use ($class, $dateFormat, $timeFormat, $language) {
+				$component = new $class($dateFormat, $timeFormat, $language,  $label);
 				$form->addComponent($component, $name);
 				return $component;
 			}

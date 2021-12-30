@@ -1,25 +1,12 @@
 <?php
-/**
- * Date.php
- *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:FormDateTime!
- * @subpackage	Controls
- * @since		5.0
- *
- * @date		30.06.13
- */
 
-namespace IPub\FormDateTime\Controls;
+namespace MetisFW\FormDateTime\FormDateTime\Controls;
 
 use Nette;
 use Nette\Forms;
 use Nette\Utils;
 
-use IPub;
-use IPub\FormDateTime;
+use MetisFW\FormDateTime;
 
 class Date extends BaseControl
 {
