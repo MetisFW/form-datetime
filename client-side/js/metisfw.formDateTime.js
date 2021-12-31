@@ -228,7 +228,7 @@
 	};
 
 	/**
-	 * MetisFw Forms date picker plugin definition
+	 * MetisFW Forms date picker plugin definition
 	 */
 
 	var old = $.fn.metisFwFormsDateTime;
@@ -264,7 +264,7 @@
 	MetisFW.Forms.DateTime.ready(MetisFW.Forms.DateTime.initialize);
 
 	// Assign plugin data to DOM
-	window.metisFw = MetisFW;
+	window.metisFW = MetisFW;
 
 	return MetisFW;
 
