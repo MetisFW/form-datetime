@@ -45,17 +45,19 @@
 				$timeClear		: this.$element.find('[data-action="timepicker.clear"]')
 			};
 
-			if (this.$element.data('metisFwFormsDatepickerType') == 'uikit') {
+			if (this.$element.data('metisfwFormsDatepickerType') == 'uikit') {
 				this.type = 'uikit';
 
 				// Init uikit datepicker
 				this.uikitPicker();
 
-			} else if (this.$element.data('metisFwFormsDatepickerType') == 'bootstrap') {
+			} else if (this.$element.data('metisfwFormsDatepickerType') == 'bootstrap') {
 				this.type = 'bootstrap';
 
 				// Init bootstrap datepicker
 				this.bootstrapPicker();
+			} else {
+				console.error("Unknown data metisfwFormsDatepickerType value '" + this.$element.data('metisfwFormsDatepickerType') + "'")
 			}
 
 			this.buttons.$dateTrigger.click(function (event) {
